@@ -89,8 +89,7 @@ class Pulsator extends StatefulWidget {
   State<Pulsator> createState() => _PulsatorViewState();
 }
 
-class _PulsatorViewState extends State<Pulsator>
-    with SingleTickerProviderStateMixin {
+class _PulsatorViewState extends State<Pulsator> with SingleTickerProviderStateMixin {
   AnimationController? _controller;
   late Animation<double> _animation;
   final int _counter = 0;
@@ -286,26 +285,24 @@ class _PulseCircle extends StatelessWidget {
 
     // If minProgress or maxProgress are set, check if the pulse should be
     // rendered.
-    if ((minProgress != null && progress < minProgress!) ||
-        (maxProgress != null && progress > maxProgress!)) {
+    if ((minProgress != null && progress < minProgress!) || (maxProgress != null && progress > maxProgress!)) {
       return const SizedBox.shrink();
     }
 
     // Make sure the progress is between 0.0 and 1.0.
     final t = progress % 1.0;
-    final opacity =
-        style.fadeOpacity ? 1.0 - style.opacityCurve.transform(t) : 1.0;
-    final scale = style.startSize +
-        style.pulseCurve.transform(t) * scaleFactor * (1.0 - style.startSize);
+    final opacity = style.fadeOpacity ? 1.0 - style.opacityCurve.transform(t) : 1.0;
+    final scale = style.startSize + style.pulseCurve.transform(t) * scaleFactor * (1.0 - style.startSize);
+
+    final pulseShape = style.borderRadius == null ? BoxShape.circle : BoxShape.rectangle;
 
     return Transform.scale(
       scale: scale,
       child: Container(
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: style.gradientStyle == null
-              ? style.color.withOpacity(opacity)
-              : null,
+          shape: pulseShape,
+          borderRadius: style.borderRadius,
+          color: style.gradientStyle == null ? style.color.withOpacity(opacity) : null,
           gradient: style.gradientStyle != null
               ? RadialGradient(
                   radius: style.gradientStyle!.radius,
@@ -314,14 +311,12 @@ class _PulseCircle extends StatelessWidget {
                       ? [
                           style.color.withOpacity(opacity),
                           style.gradientStyle!.startColor != null
-                              ? style.gradientStyle!.startColor!
-                                  .withOpacity(opacity)
+                              ? style.gradientStyle!.startColor!.withOpacity(opacity)
                               : style.color.withOpacity(0),
                         ]
                       : [
                           style.gradientStyle!.startColor != null
-                              ? style.gradientStyle!.startColor!
-                                  .withOpacity(opacity)
+                              ? style.gradientStyle!.startColor!.withOpacity(opacity)
                               : style.color.withOpacity(0),
                           style.color.withOpacity(opacity),
                         ])

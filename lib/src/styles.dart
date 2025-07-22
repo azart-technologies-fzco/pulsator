@@ -81,6 +81,7 @@ class PulseStyle {
     this.color = Colors.red,
     this.borderColor,
     this.borderWidth,
+    this.borderRadius,
     this.gradientStyle,
     this.pulseCurve = Curves.linear,
     this.opacityCurve = Curves.linear,
@@ -112,4 +113,7 @@ class PulseStyle {
   /// The size of the pulse when it begins, as a fraction of the pulse radius.
   /// Default is 0.0.
   final double startSize;
+
+  /// Border radius if we want pulse to shape not like circle
+  final BorderRadius? borderRadius;
 }
